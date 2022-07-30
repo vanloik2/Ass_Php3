@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('avatar')->default('images/avatars/default.png');
             $table->unsignedInteger('role')->default(2);
-            $table->integer('phone_number')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('address')->nullable();
             $table->unsignedInteger('status')->default(1);
             $table->rememberToken();

@@ -21,6 +21,11 @@ use Termwind\Components\Raw;
 //     return view('welcome');
 // });
 
+
+// Authentication
+
+
+
 Route::get('/client/index', function(){
     return view('client.layout.index');
 });

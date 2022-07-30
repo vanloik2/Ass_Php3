@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedInteger('status')->default(1);
+            $table->unsignedBigInteger('size_id');
             $table->timestamps();
         });
     }
