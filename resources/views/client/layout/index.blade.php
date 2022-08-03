@@ -14,6 +14,11 @@
     <!-- ::::::::::::::Favicon icon::::::::::::::-->
     <link rel="shortcut icon" href="{{ asset('client/images/favicon.ico') }}" type="image/png">
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+    </script>
     <!-- ::::::::::::::All CSS Files here :::::::::::::: -->
     <!-- Vendor CSS -->
     <!-- <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css">
@@ -36,6 +41,7 @@
     <link rel="stylesheet" href="{{ asset('client/css/vendor/vendor.min.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/plugins/plugins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('client/css/style.min.css') }}">
+    
 
 </head>
 
@@ -64,8 +70,7 @@
                                             <a class="active main-menu-link" href="/">Trang chủ</a>
                                         </li>
                                         <li class="has-dropdown has-megaitem">
-                                            <a href="/product-page">Sản phẩm <i
-                                                    class="fa fa-angle-down"></i></a>
+                                            <a href="/product-page">Sản phẩm <i class="fa fa-angle-down"></i></a>
                                             <!-- Mega Menu -->
                                             <div class="mega-menu">
                                                 <ul class="mega-menu-inner">
@@ -414,7 +419,7 @@
                 <li><a href="wishlist.html">Wishlist</a></li>
                 <li><a href="cart.html">Cart</a></li>
                 <li><a href="">Checkout</a></li>
-                
+
             </ul>
 
             <ul class="user-link">

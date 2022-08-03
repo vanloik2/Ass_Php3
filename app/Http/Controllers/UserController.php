@@ -81,7 +81,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['title'] = 'Sửa thông tin người dùng';
+
+        $data['user'] = User::find($id);
+
+        return view('admin.table.user.edit', $data);
     }
 
     /**
@@ -91,9 +95,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->password = Hash::make($request->password);
+
+        if($request->hasFile('avatar')){
+
+            $avatar = $request->file('avatar');
+            $avatarName = $avatar->hashName();
+            $avatarName = $request->name . '-' . $avatarName;
+
+            $user->avatar = $avatar->storeAs('images/avatars', $avatarName);
+        }
+
+        $user->save();
+
+        return redirect()->route('user.index')->with('success', 'Cập nhật thông tin người dùng thành công');
     }
 
     /**

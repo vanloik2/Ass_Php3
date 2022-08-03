@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -24,6 +25,14 @@ use Termwind\Components\Raw;
 
 // Authentication
 
+Route::prefix('/')->group(function(){
+    
+    Route::get('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [AuthController::class, 'loginPost'])->name('loginPost');
+    Route::get('register', [AuthController::class, 'register'])->name('register');
+    Route::post('register', [AuthController::class, 'registerPost'])->name('registerPost');
+
+});
 
 
 Route::get('/client/index', function(){
@@ -57,9 +66,7 @@ Route::get('/product-page', function(){
 Route::get('/product-detail', function(){
     return view('client.product-detail');
 });
-Route::get('login', function(){
-    return view('client.login');
-});
 Route::get('cart', function(){
     return view('client.cart');
 });
+

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +18,7 @@ class AuthController extends Controller
 
     }
 
-    public function actionRegister(Request $request){
+    public function registerPost(RegisterRequest $request){
 
         $user = new User($request->all());
 
@@ -34,7 +36,7 @@ class AuthController extends Controller
 
     }
 
-    public function actionLogin(Request $request){
+    public function loginPost(LoginRequest $request){
 
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
 
