@@ -55,7 +55,10 @@
                     </div>
                     <div class="mb-3">
                         <label for="">Hình đại diện</label>
-                        <input type="file" class="form-control" value="{{ old('avatar') }}" name="avatar">
+                        <input type="file" class="form-control" onchange="uploadFile()" value="{{ old('image') }}"
+                            name="avatar" id="image_upload">
+                        <p class="preview-image"><img src="" id="previewImage" alt="">
+                        </p>
                     </div>
                     <div class="mb-3">
                         <label for="">Trạng thái</label> <br>

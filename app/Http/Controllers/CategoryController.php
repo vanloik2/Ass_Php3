@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -17,7 +19,7 @@ class CategoryController extends Controller
     {
         $data['title'] = 'Bảng danh mục sản phẩm';
         $data['txt_search'] = $request->get('txt_search');
-        $data['categories'] = Category::select('id', 'name', 'image')->where('name', 'like', '%' . $data['txt_search'] . '%')->paginate(5)->withQueryString();
+        $data['categories'] = Category::select('id', 'name', 'image')->with('products')->where('name', 'like', '%' . $data['txt_search'] . '%')->paginate(5)->withQueryString();
 
         return view('admin.table.category.index', $data);
     }
@@ -40,11 +42,8 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:categories|max:255',
-        ]);
 
         $category = new Category($request->all());
 
@@ -82,7 +81,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['title'] = 'Sửa danh mục sản phẩm';
+
+        $data['category'] = Category::find($id);
+
+        return view('admin.table.category.edit', $data);
+
     }
 
     /**
@@ -92,9 +96,24 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        //
+        $category = Category::find($id);
+
+        $category->fill($request->all());
+
+        if($request->hasFile('image')){
+
+            $image = $request->image;
+            $imageName = $image->hashName();
+            $imageName = $request->name . '_' . $imageName;
+
+            $category->image = $image->storeAs('images/categories', $imageName);
+        }
+
+        $category->save();
+        
+        return redirect()->route('category.index')->with('success', 'Sửa danh mục sản phẩm thành công');
     }
 
     /**

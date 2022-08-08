@@ -11,8 +11,18 @@
     <div class="card">
         <div class="card-header">
             <form action="" method="get">
-                <div class="row row-cols-auto">
-                    <div class="col input-group">
+                <div class="row">
+                    <div class="col-md-7 input-group">
+                        <select class="form-select col-md-5" name="category_id">
+                            <option value="">Tất cả danh mục</option>
+                            @foreach ($categories as $category)
+                                @if($category->id == $category_id)
+                                    <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                @else
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
                         <input type="text" value="{{ $txt_search }}" class="form-control" name="txt_search">
                     </div>
                     <div class="col">
@@ -49,14 +59,33 @@
                                 <img src="{{ asset($product->image) }}" width="60px" alt="">
                             </td>
                             <td>{{ $product->category->name }}</td>
-                            <td>{{ $product->status == 1 ? 'Còn hàng' : 'Hết hàng' }}</td>
-                            <td style="width: 145px">
-                                <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <td>
+                                <form action="{{ route('product.change-status', $product) }}" method="post"
+                                    onsubmit=" return confirm('Đổi trạng thái sản phẩm!')">
+                                    @method('PUT')
+                                    @csrf
+
+                                    <div class="form-check form-switch">
+                                        @if ($product->status == 1)
+                                            <input class="form-check-input input-status" type="checkbox" role="switch"
+                                                id="flexSwitchCheckDefault" checked>
+                                            <button class="btn-status" type="submit"></button>
+                                        @else
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                id="flexSwitchCheckDefault">
+                                            <button class="btn-status" type="submit"></button>
+                                        @endif
+                                    </div>
+                                </form>
+                            </td>
+                            <td style="width: 95px">
+                                <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-warning"><i
+                                        class="bi bi-gear"></i></a>
                                 <form action="{{ route('product.destroy', $product->id) }}" method="post"
                                     style="display: inline-block" onsubmit="return confirm('Submit Delete!!!')">
                                     @method('DELETE')
                                     @csrf
-                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button>
                                 </form>
                             </td>
                         </tr>

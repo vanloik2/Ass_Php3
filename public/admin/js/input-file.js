@@ -1,6 +1,6 @@
 function uploadFile(){
     
-    var avatar = document.querySelector('input[name=avatar]').files[0];
+    var image = document.querySelector('#image_upload').files[0];
     var preview = document.querySelector('#previewImage');
 
     var reader = new FileReader();
@@ -9,7 +9,7 @@ function uploadFile(){
         preview.src = reader.result;
     }, false);
 
-    if(avatar){
-        reader.readAsDataURL(avatar);
+    if(image){
+        reader.readAsDataURL(image);
     }
 }

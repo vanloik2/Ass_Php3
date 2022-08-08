@@ -28,6 +28,7 @@ class ProductRequest extends FormRequest
             'price' => 'required|numeric',
             'quantity' => 'required|numeric',
             'category_id' => 'required|numeric',
+            'image' => 'required',
         ];
     }
 
@@ -41,6 +42,7 @@ class ProductRequest extends FormRequest
             'quantity.required' => 'Số lượng sản phẩm không được để trống',
             'quantity.numeric' => 'Số lượng sản phẩm phải là số',
             'category_id.numeric' => 'Danh mục sản phẩm không được để trống',
+            'image.required' => 'Ảnh sản phẩm không được để trống',
         ];
     }
 }

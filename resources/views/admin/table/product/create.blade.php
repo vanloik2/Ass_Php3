@@ -28,8 +28,11 @@
                         <input type="number" class="form-control" value="{{ old('quantity') }}" name="quantity">
                     </div>
                     <div class="mb-3">
-                        <label for="">Ảnh danh mục</label>
-                        <input type="file" class="form-control" value="{{ old('image') }}" name="image">
+                        <label for="">Ảnh sản phẩm</label>
+                        <input type="file" class="form-control" onchange="uploadFile()" value="{{ old('image') }}"
+                            name="image" id="image_upload"> 
+                        <p class="preview-image"><img src="" id="previewImage" alt="">
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -47,11 +50,11 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="1"
                                 checked>
-                            <label class="form-check-label" for="inlineRadio1">Còn hàng</label>
+                            <label class="form-check-label" for="inlineRadio1">Hoạt động</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="2">
-                            <label class="form-check-label" for="inlineRadio1">Hết Hàng</label>
+                            <label class="form-check-label" for="inlineRadio1">Không hoạt động</label>
                         </div>
                     </div>
                     <div class="mb-3">

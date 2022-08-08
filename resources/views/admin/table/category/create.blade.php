@@ -1,17 +1,17 @@
 @extends('admin.layout.index')
 @section('content')
-    
+
     <div class="col-md-6">
         <div>
-            @if($errors->any())
+            @if ($errors->any())
                 <ul class="alert alert-danger list-unstyled">
-                    @foreach($errors->all() as $error)
+                    @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             @endif
         </div>
-        <form action="{{ route('category.store') }}" method="post" enctype="multipart/form-data" >
+        <form action="{{ route('category.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="">Tên danh mục</label>
@@ -19,7 +19,9 @@
             </div>
             <div class="mb-3">
                 <label for="">Ảnh danh mục</label>
-                <input type="file" class="form-control" value="{{ old('image') }}" name="image">
+                <input type="file" class="form-control" onchange="uploadFile()" name="image" id="image_upload">
+                <p class="preview-image"><img src="" id="previewImage" alt="">
+                </p>
             </div>
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Thêm mới</button>

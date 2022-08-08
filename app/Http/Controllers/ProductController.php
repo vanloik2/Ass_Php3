@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -17,8 +18,13 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $data['title'] = 'Bảng sản phẩm';
+        $data['categories'] = Category::all();
+        $data['category_id'] = $request->get('category_id');
         $data['txt_search'] = $request->get('txt_search');
-        $data['products'] = Product::with('category')->where('name', 'like', '%'.$data['txt_search'].'%')->paginate(4)->withQueryString();
+
+        $data['products'] = Product::with('category')->where('name', 'like', '%' . $data['txt_search'] . '%')
+        ->where('category_id', 'like', '%' . $data['category_id'] . '%')
+        ->paginate(4)->withQueryString();
 
         return view('admin.table.product.index', $data);
     }
@@ -47,20 +53,18 @@ class ProductController extends Controller
 
         $product = new Product($request->all());
 
-        if($request->hasFile('image')){
-            
+        if ($request->hasFile('image')) {
+
             $image = $request->image;
             $imageName = $image->hashName();
             $imageName = $request->name . '_' . $imageName;
 
             $product->image = $image->storeAs('images/products', $imageName);
-
         }
 
         $product->save();
 
         return redirect()->route('product.index')->with('success', 'Thêm sản phẩm thành công');
-
     }
 
     /**
@@ -82,7 +86,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['title'] = 'Sửa sản phẩm';
+        $data['product'] = Product::find($id);
+        $data['categories'] = Category::all();
+
+        return view('admin.table.product.edit', $data);
     }
 
     /**
@@ -92,9 +100,24 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        $product = Product::find($id);
+
+        $product->fill($request->all());
+      
+        if ($request->hasFile('image')) {
+
+            $image = $request->image;
+            $imageName = $image->hashName();
+            $imageName = $request->name . '_' . $imageName;
+
+            $product->image = $image->storeAs('images/products', $imageName);
+        }
+
+        $product->save();
+
+        return redirect()->route('product.index')->with('success', 'Cập nhật sản phẩm thành công');
     }
 
     /**
@@ -110,5 +133,19 @@ class ProductController extends Controller
         $product->delete();
 
         return back()->with('success', 'Xóa sản phẩm thành công');
+    }
+
+    public function changeStatus(Product $product)
+    {
+
+        if ($product->status === 1) {
+            $product->status = 2;
+        } else {
+            $product->status = 1;
+        }
+
+        $product->save();
+        
+        return back()->with('success', 'Cập nhật trạng thái thành công');
     }
 }

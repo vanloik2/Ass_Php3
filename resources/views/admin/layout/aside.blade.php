@@ -15,7 +15,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Home</span></a>
+            <span>Dasboard</span></a>
     </li>
 
     <!-- Divider -->
@@ -28,7 +28,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="">
+        <a class="nav-link collapsed" href="{{ route('user.index') }}">
             <i class="fas fa-fw fa-cog"></i>
             <span>Users</span>
         </a>
@@ -36,23 +36,37 @@
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="">
+        <a class="nav-link collapsed" href="{{ route('product.index') }}">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Products</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="">
+        <a class="nav-link collapsed" href="{{ route('category.index') }}">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Register</span>
+            <span>Categories</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="/admin/user">
+        <a class="nav-link collapsed" href="{{ route('order.index') }}">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>///</span>
+            <span>Orders</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('contact.index') }}">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Contacts</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('statis.index') }}">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Statis</span>
         </a>
     </li>
 

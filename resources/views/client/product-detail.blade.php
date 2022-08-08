@@ -32,29 +32,14 @@
                         <div class="product-large-image product-large-image-horaizontal swiper-container">
                             <div class="swiper-wrapper">
                                 <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                    <img src="{{ asset('client/images/product/default/home-1/default-1.jpg') }}" alt="">
-                                </div>
-                                <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                    <img src="{{ asset('client/images/product/default/home-1/default-2.jpg') }}" alt="">
-                                </div>
-                                <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                    <img src="{{ asset('client/images/product/default/home-1/default-3.jpg') }}" alt="">
-                                </div>
-                                <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                    <img src="{{ asset('client/images/product/default/home-1/default-4.jpg') }}" alt="">
-                                </div>
-                                <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                    <img src="{{ asset('client/images/product/default/home-1/default-5.jpg') }}" alt="">
-                                </div>
-                                <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
-                                    <img src="{{ asset('client/images/product/default/home-1/default-6.jpg') }}" alt="">
+                                    <img src="{{ asset($product->image) }}" alt="">
                                 </div>
                             </div>
                         </div>
                         <!-- End Large Image -->
                         <!-- Start Thumbnail Image -->
                         <div class="product-image-thumb product-image-thumb-horizontal swiper-container pos-relative mt-5">
-                            <div class="swiper-wrapper">
+                            {{-- <div class="swiper-wrapper">
                                 <div class="product-image-thumb-single swiper-slide">
                                     <img class="img-fluid" src="assets/images/product/default/home-1/default-1.jpg"
                                         alt="">
@@ -79,7 +64,7 @@
                                     <img class="img-fluid" src="assets/images/product/default/home-1/default-6.jpg"
                                         alt="">
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- Add Arrows -->
                             <div class="gallery-thumb-arrow swiper-button-next"></div>
                             <div class="gallery-thumb-arrow swiper-button-prev"></div>
@@ -92,7 +77,7 @@
                         data-aos-delay="200">
                         <!-- Start  Product Details Text Area-->
                         <div class="product-details-text">
-                            <h4 class="title">Ornare sed consequat</h4>
+                            <h4 class="title">{{ $product->name }}</h4>
                             <div class="d-flex align-items-center">
                                 <ul class="review-star">
                                     <li class="fill"><i class="ion-android-star"></i></li>
@@ -101,12 +86,10 @@
                                     <li class="fill"><i class="ion-android-star"></i></li>
                                     <li class="empty"><i class="ion-android-star"></i></li>
                                 </ul>
-                                <a href="#" class="customer-review ml-2">(customer review )</a>
+                                <a href="#" class="customer-review ml-2">( {{ $product->category->name }} )</a>
                             </div>
-                            <div class="price">$80.00</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est
-                                tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo
-                                gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla.</p>
+                            <div class="price">{{ number_format($product->price, 0, ',', '.') }}</div>
+                            <p>{{ substr($product->description, 0, 50) }}</p>
                         </div> <!-- End  Product Details Text Area-->
                         <!-- Start Product Variable Area -->
                         <div class="product-details-variable">
@@ -114,21 +97,31 @@
                             <!-- Product Variable Single Item -->
                             <div class="variable-single-item">
                                 <div class="product-stock"> <span class="product-stock-in"><i
-                                            class="ion-checkmark-circled"></i></span> 200 IN STOCK</div>
+                                            class="ion-checkmark-circled"></i></span> {{ $product->quantity }} IN STOCK
+                                </div>
                             </div>
                             <!-- Product Variable Single Item -->
                             <div class="d-flex align-items-center ">
-                                <div class="variable-single-item ">
-                                    <span>Quantity</span>
-                                    <div class="product-variable-quantity">
-                                        <input min="1" max="100" value="1" type="number">
+                                <form action="{{ route('addToCart', $product) }}" method="post" style="display: flex; align-items: center">
+                                    @csrf
+                                    <div class="variable-single-item ">
+                                        <span>Số lượng</span>
+                                        <div class="product-variable-quantity">
+                                            <input min="1" max="100" name="quant" value="1" type="number">
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="product-add-to-cart-btn">
-                                    <a href="#" class="btn btn-block btn-lg btn-black-default-hover"
-                                        data-bs-toggle="modal" data-bs-target="#modalAddcart">+ Add To Cart</a>
-                                </div>
+                                    <div class="product-add-to-cart-btn" style="margin-top: 10px">
+                                        <button class="btn btn-block btn-lg btn-black-default-hover">+ Add To Cart</button>
+                                    </div>
+                                    <div class="product-add-to-cart-btn" style="margin: 24px 0px 0px 20px;">
+                                        @if(session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                        @endif
+                                    </div>
+                                </form>
                             </div>
                             <!-- Start  Product Details Meta Area-->
                             <div class="product-details-meta mb-20">

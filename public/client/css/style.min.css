@@ -6556,6 +6556,7 @@ fieldset:disabled .btn {
 }
 .ml-2 {
     margin-left: 10px !important;
+    margin-top: 13px !important;
 }
 .ml-3 {
     margin-left: 15px !important;
@@ -13710,8 +13711,8 @@ input {
 @media (min-width: 992px) {
     .breadcrumb-wrapper {
         margin-bottom: 100px;
-        padding-top: 80px;
-        padding-bottom: 80px;
+        padding-top: 120px;
+        padding-bottom: 120px;
     }
 }
 .breadcrumb-title {

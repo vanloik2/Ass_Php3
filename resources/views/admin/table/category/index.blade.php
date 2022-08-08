@@ -43,14 +43,14 @@
                             <td>
                                 <img src="{{ asset($category->image) }}" width="60px" alt="">
                             </td>
-                            <td></td>
+                            <td>{{ $category->products->count() }}</td>
                             <td>
-                                <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-warning"><i class="bi bi-gear"></i></a>
                                 <form action="{{ route('category.destroy', $category->id) }}" method="post"
                                     style="display: inline-block" onsubmit="return confirm('Xác nhận xóa!!!')">
                                     @method('DELETE')
                                     @csrf
-                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button>
                                 </form>
                             </td>
                         </tr>

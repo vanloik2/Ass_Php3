@@ -2,10 +2,15 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\InterfaceClientController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StatisController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Termwind\Components\Raw;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,48 +30,70 @@ use Termwind\Components\Raw;
 
 // Authentication
 
-Route::prefix('/')->group(function(){
-    
+Route::middleware('guest')->prefix('/')->group(function () {
+
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::post('login', [AuthController::class, 'loginPost'])->name('loginPost');
+
     Route::get('register', [AuthController::class, 'register'])->name('register');
     Route::post('register', [AuthController::class, 'registerPost'])->name('registerPost');
 
+    Route::get('login-google', [AuthController::class, 'loginGoogle'])->name('login-google');
+
+    Route::get('google/callback', [AuthController::class, 'loginGoogleCallback'])->name('google-callback');
 });
 
+Route::middleware('auth')->get('logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/client/index', function(){
+Route::get('/client/index', function () {
     return view('client.layout.index');
 });
 
-Route::get('/admin/index', function(){
+Route::get('/admin/index', function () {
     return view('admin.layout.index');
 });
 
-Route::prefix('admin')->group(function(){
+Route::middleware('auth')->prefix('/')->group(function () {
 
-    Route::resource('category', CategoryController::class);
+    Route::middleware('admin')->prefix('admin')->group(function () {
+        Route::resource('category', CategoryController::class);
 
-    Route::resource('product', ProductController::class);
+        Route::resource('product', ProductController::class);
+        Route::put('change-status/{product}', [ProductController::class, 'changeStatus'])->name('product.change-status');
 
-    Route::resource('user', UserController::class);
-    Route::put('change-status/{user}', [UserController::class, 'changeStatus'])->name('user.change-status');
+        Route::resource('user', UserController::class);
+        Route::put('change-status/{user}', [UserController::class, 'changeStatus'])->name('user.change-status');
 
+        Route::resource('order', OrderController::class);
+
+        Route::resource('contact', ContactController::class);
+
+        Route::get('statis', [StatisController::class, 'index'])->name('statis.index');
+
+    });
+
+    Route::prefix('client')->group(function () {
+
+        Route::get('home-page', [InterfaceClientController::class, 'homePage'])->name('home_page');
+        Route::get('products', [InterfaceClientController::class, 'showProducts'])->name('products');
+        Route::get('contact-us', [InterfaceClientController::class, 'contactUs'])->name('contact-us');
+        Route::get('carts', [InterfaceClientController::class, 'carts'])->name('carts');
+        Route::get('product-detail/{id}', [InterfaceClientController::class, 'productDetail'])->name('product-detail');
+        Route::post('add-to-cart/{product}', [InterfaceClientController::class, 'addToCart'])->name('addToCart');
+        Route::get('remove-item-cart/{id}', [InterfaceClientController::class, 'removeItemCart'])->name('removeItemCart');
+        Route::get('order', [InterfaceClientController::class, 'order'])->name('order');
+        Route::delete('orderDetroy/{id}', [InterfaceClientController::class, 'orderDetroy'])->name('orderDetroy');
+        Route::post('contact', [InterfaceClientController::class, 'contactStore'])->name('contactStore');
+        Route::get('checkout', [InterfaceClientController::class, 'checkout'])->name('checkout');
+    });
 });
 
-Route::get('/', function () {
-    return view('client.home_page');
-});
-Route::get('/contact-us', function () {
-    return view('client.contact-us');
-});
-Route::get('/product-page', function(){
-    return view('client.product-page');
-});
-Route::get('/product-detail', function(){
-    return view('client.product-detail');
-});
-Route::get('cart', function(){
-    return view('client.cart');
-});
+
+//login-google - Đường dẫn mở ra màn hình đăng nhập google
+
+// Route::get('login-google', function () {
+
+//     return Socialite::driver('google')->redirect();
+// });
+
 

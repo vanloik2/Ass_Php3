@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data['title'] = 'Bảng danh người dùng';
+
+        $data['title'] = 'Bảng danh sách người dùng';
         $data['txt_search'] = $request->get('txt_search');
         $data['users'] = User::select('id', 'name', 'email', 'avatar', 'phone_number', 'address', 'role', 'status')->where('name', 'like', '%' . $data['txt_search'] . '%')->paginate(5)->withQueryString();
 
@@ -95,12 +97,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
         $user = User::find($id);
 
+        $user->fill($request->all());
+        
         $user->password = Hash::make($request->password);
-
+       
         if($request->hasFile('avatar')){
 
             $avatar = $request->file('avatar');
@@ -143,4 +147,5 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Cập nhật trạng thái người dùng thành công');
 
     }
+
 }
