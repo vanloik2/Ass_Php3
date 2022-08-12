@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Comment;
+use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -46,10 +48,10 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $user = new User($request->all());
-        
+
         $user->password = Hash::make($request->password);
 
-        if($request->hasFile('avatar')){
+        if ($request->hasFile('avatar')) {
 
             $avatar = $request->file('avatar');
             $avatarName = $avatar->hashName();
@@ -102,10 +104,10 @@ class UserController extends Controller
         $user = User::find($id);
 
         $user->fill($request->all());
-        
+
         $user->password = Hash::make($request->password);
-       
-        if($request->hasFile('avatar')){
+
+        if ($request->hasFile('avatar')) {
 
             $avatar = $request->file('avatar');
             $avatarName = $avatar->hashName();
@@ -129,23 +131,29 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
+        $comments = Comment::where('user_id', $id)->get();
+
+        foreach ($comments as $comment) {
+
+            $comment->delete();
+        }
+
         $user->delete();
 
-        return back()->with('success', 'Xóa người dùng thành công');    
+        return back()->with('success', 'Xóa người dùng thành công');
     }
 
-    public function changeStatus(User $user){
+    public function changeStatus(User $user)
+    {
 
-        if($user->status == 1){
+        if ($user->status == 1) {
             $user->status = 0;
-        }else{
+        } else {
             $user->status = 1;
         }
 
         $user->save();
 
         return redirect()->back()->with('success', 'Cập nhật trạng thái người dùng thành công');
-
     }
-
 }

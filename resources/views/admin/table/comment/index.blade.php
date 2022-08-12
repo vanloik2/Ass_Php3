@@ -30,22 +30,24 @@
                         <th>#</th>
                         <th>Tên người dùng</th>
                         <th>Email</th>
-                        <th>Chủ đề</th>
                         <th>Nội dung</th>
+                        <th>Sản phẩm</th>
+                        <th>Ngày đăng</th>
                         <th>Xử lí</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($contacts as $index => $contact)
+                    @foreach ($comments as $index => $comment)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $contact->name }}</td>
-                            <td>{{ $contact->email }}</td>
-                            <td>{{ $contact->subject }}</td>
-                            <td>{{ $contact->message }}</td>
+                            <td>{{ $comment->name }}</td>
+                            <td>{{ $comment->email }}</td>
+                            <td>{{ $comment->content }}</td>
+                            <td>{{ $comment->product->name }}</td>
+                            <td>{{ $comment->created_at }}</td>
                             <td>
-                                {{-- <a href="{{ route('contact.edit', $contact->id) }}" class="btn btn-sm btn-warning"><i class="bi bi-gear"></i></a> --}}
-                                <form action="{{ route('contact.destroy', $contact->id) }}" method="post"
+                                {{-- <a href="{{ route('comment.edit', $comment->id) }}" class="btn btn-sm btn-warning"><i class="bi bi-gear"></i></a> --}}
+                                <form action="{{ route('comment.destroy', $comment->id) }}" method="post"
                                     style="display: inline-block" onsubmit="return confirm('Xác nhận xóa!!!')">
                                     @method('DELETE')
                                     @csrf
@@ -57,7 +59,7 @@
 
                 </tbody>
             </table>
-            <div>{{ $contacts->links() }}</div>
+            <div>{{ $comments->links() }}</div>
         </div>
     </div>
 @endsection

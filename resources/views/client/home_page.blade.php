@@ -243,6 +243,13 @@
                 </div>
             </div>
         </div>
+        <div style="margin-left: 50px; margin-right: 50px">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+        </div>
         <!-- Start Section Content Text Area -->
         <div class="product-wrapper" data-aos="fade-up" data-aos-delay="200">
             <div class="container">
@@ -265,8 +272,14 @@
                                                 </div>
                                                 <div class="action-link">
                                                     <div class="action-link-left">
-                                                        <a href="#" data-bs-toggle="modal"
-                                                            data-bs-target="#modalAddcart">Add to Cart</a>
+                                                        {{-- <a href="" --}}
+                                                        {{-- data-bs-target="#modalAddcart"> --}}
+                                                        <form action="{{ route('addToCart', $product) }}" method="post">
+                                                            @csrf
+                                                            <button style="color: #fff; font-weight: bold">ADD TO
+                                                                CART</button>
+                                                        </form>
+                                                        {{-- </a> --}}
                                                     </div>
                                                     <div class="action-link-right">
                                                         <a href="#" data-bs-toggle="modal"
@@ -374,13 +387,18 @@
                                         <div class="product-default-single-item product-color--golden swiper-slide">
                                             <div class="image-box">
                                                 <a href="{{ route('product-detail', $product) }}" class="image-link">
-                                                    <img src="{{ asset( $product->image ) }}"
-                                                        alt="">
+                                                    <img src="{{ asset($product->image) }}" alt="">
                                                 </a>
                                                 <div class="action-link">
                                                     <div class="action-link-left">
-                                                        <a href="#" data-bs-toggle="modal"
-                                                            data-bs-target="#modalAddcart">Add to Cart</a>
+                                                        {{-- <a href="" --}}
+                                                        {{-- data-bs-target="#modalAddcart"> --}}
+                                                        <form action="{{ route('addToCart', $product) }}" method="post">
+                                                            @csrf
+                                                            <button style="color: #fff; font-weight: bold">ADD TO
+                                                                CART</button>
+                                                        </form>
+                                                        {{-- </a> --}}
                                                     </div>
                                                     <div class="action-link-right">
                                                         <a href="#" data-bs-toggle="modal"
@@ -393,7 +411,9 @@
                                             </div>
                                             <div class="content">
                                                 <div class="content-left">
-                                                    <h6 class="title"><a href="{{ route('product-detail', $product) }}">{{ $product->name }}</a></h6>
+                                                    <h6 class="title"><a
+                                                            href="{{ route('product-detail', $product) }}">{{ $product->name }}</a>
+                                                    </h6>
                                                     <ul class="review-star">
                                                         <li class="fill"><i class="ion-android-star"></i></li>
                                                         <li class="fill"><i class="ion-android-star"></i></li>
@@ -403,7 +423,8 @@
                                                     </ul>
                                                 </div>
                                                 <div class="content-right">
-                                                    <span class="price">{{ number_format($product->price, 0, ',', '.') }}</span>
+                                                    <span
+                                                        class="price">{{ number_format($product->price, 0, ',', '.') }}</span>
                                                 </div>
 
                                             </div>

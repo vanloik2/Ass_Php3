@@ -54,7 +54,7 @@
                                     <!-- Start Sort Select Option -->
                                     <div class="sort-select-list d-flex align-items-center">
                                         <label class="mr-2"></label>
-                                        <form action="" method="get" >
+                                        <form action="" method="get">
                                             <fieldset>
                                                 <select name="category_id" id="speed">
                                                     <option value="">Tất cả danh mục</option>
@@ -68,7 +68,7 @@
                                                         @endif
                                                     @endforeach
                                                 </select>
-                                                <button ><i style="font-size: 25px" class="bi bi-funnel-fill"></i></button>
+                                                <button><i style="font-size: 25px" class="bi bi-funnel-fill"></i></button>
                                             </fieldset>
                                         </form>
                                     </div> <!-- End Sort Select Option -->
@@ -79,7 +79,13 @@
                             </div>
                         </div>
                     </div> <!-- End Section Content -->
-
+                    <div style="margin-left: 50px; margin-right: 50px">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                    </div>
                     <!-- Start Tab Wrapper -->
                     <div class="sort-product-tab-wrapper">
                         <div class="container">
@@ -101,8 +107,17 @@
                                                                 </a>
                                                                 <div class="action-link">
                                                                     <div class="action-link-left">
-                                                                        <a href="#" data-bs-toggle="modal"
-                                                                            data-bs-target="#modalAddcart">Add to Cart</a>
+                                                                        {{-- <a href="" --}}
+                                                                        {{-- data-bs-target="#modalAddcart"> --}}
+                                                                        <form action="{{ route('addToCart', $product) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            <button
+                                                                                style="color: #fff; font-weight: bold">ADD
+                                                                                TO
+                                                                                CART</button>
+                                                                        </form>
+                                                                        {{-- </a> --}}
                                                                     </div>
                                                                     <div class="action-link-right">
                                                                         <a href="#" data-bs-toggle="modal"

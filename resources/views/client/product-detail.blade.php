@@ -102,12 +102,14 @@
                             </div>
                             <!-- Product Variable Single Item -->
                             <div class="d-flex align-items-center ">
-                                <form action="{{ route('addToCart', $product) }}" method="post" style="display: flex; align-items: center">
+                                <form action="{{ route('addToCart', $product) }}" method="post"
+                                    style="display: flex; align-items: center">
                                     @csrf
                                     <div class="variable-single-item ">
                                         <span>Số lượng</span>
                                         <div class="product-variable-quantity">
-                                            <input min="1" max="100" name="quant" value="1" type="number">
+                                            <input min="1" max="100" name="quant" value="1"
+                                                type="number">
                                         </div>
                                     </div>
 
@@ -115,10 +117,10 @@
                                         <button class="btn btn-block btn-lg btn-black-default-hover">+ Add To Cart</button>
                                     </div>
                                     <div class="product-add-to-cart-btn" style="margin: 24px 0px 0px 20px;">
-                                        @if(session('success'))
-                                        <div class="alert alert-success">
-                                            {{ session('success') }}
-                                        </div>
+                                        @if (session('success'))
+                                            <div class="alert alert-success">
+                                                {{ session('success') }}
+                                            </div>
                                         @endif
                                     </div>
                                 </form>
@@ -173,7 +175,7 @@
                                     Specification
                                 </a></li>
                             <li><a class="nav-link" data-bs-toggle="tab" href="#review">
-                                    Reviews (1)
+                                    Comments
                                 </a></li>
                         </ul> <!-- End Product Details Tab Button -->
 
@@ -183,18 +185,7 @@
                                 <!-- Start Product Details Tab Content Singel -->
                                 <div class="tab-pane active show" id="description">
                                     <div class="single-tab-content-item">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec
-                                            est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare
-                                            lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus
-                                            eu, suscipit id nulla. </p>
-                                        <p>Pellentesque aliquet, sem eget laoreet ultrices, ipsum metus feugiat sem, quis
-                                            fermentum turpis eros eget velit. Donec ac tempus ante. Fusce ultricies massa
-                                            massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit
-                                            est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere
-                                            nisl, in accumsan elit odio quis mi. Cras neque metus, consequat et blandit et,
-                                            luctus a nunc. Etiam gravida vehicula tellus, in imperdiet ligula euismod eget
-                                        </p>
+                                        <p>{{ $product->description }}</p>
                                     </div>
                                 </div> <!-- End Product Details Tab Content Singel -->
                                 <!-- Start Product Details Tab Content Singel -->
@@ -229,7 +220,7 @@
                                     <div class="single-tab-content-item">
                                         <!-- Start - Review Comment -->
                                         <ul class="comment">
-                                            <!-- Start - Review Comment list-->
+                                            {{-- <!-- Start - Review Comment list-->
                                             <li class="comment-list">
                                                 <div class="comment-wrapper">
                                                     <div class="comment-img">
@@ -304,96 +295,106 @@
                                                         </div>
                                                     </li>
                                                 </ul> <!-- End - Review Comment Reply-->
-                                            </li> <!-- End - Review Comment list-->
+                                            </li> <!-- End - Review Comment list--> --}}
                                             <!-- Start - Review Comment list-->
                                             <li class="comment-list">
-                                                <div class="comment-wrapper">
-                                                    <div class="comment-img">
-                                                        <img src="assets/images/user/image-3.png" alt="">
-                                                    </div>
-                                                    <div class="comment-content">
-                                                        <div class="comment-content-top">
-                                                            <div class="comment-content-left">
-                                                                <h6 class="comment-name">Jaydin Jones</h6>
-                                                                <ul class="review-star">
-                                                                    <li class="fill"><i class="ion-android-star"></i>
-                                                                    </li>
-                                                                    <li class="fill"><i class="ion-android-star"></i>
-                                                                    </li>
-                                                                    <li class="fill"><i class="ion-android-star"></i>
-                                                                    </li>
-                                                                    <li class="fill"><i class="ion-android-star"></i>
-                                                                    </li>
-                                                                    <li class="empty"><i class="ion-android-star"></i>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="comment-content-right">
-                                                                <a href="#"><i class="fa fa-reply"></i>Reply</a>
-                                                            </div>
+                                                @foreach ($comments as $comment)
+                                                    <div class="comment-wrapper">
+                                                        <div class="comment-img">
+                                                            <img src="{{ asset($comment->user->avatar) }}" alt="">
                                                         </div>
+                                                        <div class="comment-content">
+                                                            <div class="comment-content-top">
+                                                                <div class="comment-content-left">
+                                                                    <h6 class="comment-name">{{ $comment->name }}</h6>
+                                                                    <ul class="review-star">
+                                                                        <li class="fill"><i
+                                                                                class="ion-android-star"></i>
+                                                                        </li>
+                                                                        <li class="fill"><i
+                                                                                class="ion-android-star"></i>
+                                                                        </li>
+                                                                        <li class="fill"><i
+                                                                                class="ion-android-star"></i>
+                                                                        </li>
+                                                                        <li class="fill"><i
+                                                                                class="ion-android-star"></i>
+                                                                        </li>
+                                                                        <li class="empty"><i
+                                                                                class="ion-android-star"></i>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="comment-content-right">
+                                                                    {{-- <a href="#"><i class="fa fa-reply"></i>Reply</a> --}}
+                                                                </div>
+                                                            </div>
 
-                                                        <div class="para-content">
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                                Tempora inventore dolorem a unde modi iste odio amet, fugit
-                                                                fuga aliquam, voluptatem maiores animi dolor nulla magnam
-                                                                ea! Dignissimos aspernatur cumque nam quod sint provident
-                                                                modi alias culpa, inventore deserunt accusantium amet earum
-                                                                soluta consequatur quasi eum eius laboriosam, maiores
-                                                                praesentium explicabo enim dolores quaerat! Voluptas ad
-                                                                ullam quia odio sint sunt. Ipsam officia, saepe repellat.
-                                                            </p>
+                                                            <div class="para-content">
+                                                                <p>{{ $comment->content }}</p>
+                                                            </div>
+                                                            <div style="margin-bottom: 10px">
+                                                                @if ($comment->user_id == Auth::user()->id)
+                                                                    <small><a style="color: red; font-size: 13px"
+                                                                            href="{{ route('commentDestroy', $comment->id) }}">Xóa</a></small>
+                                                                @endif
+                                                                <small
+                                                                    style="color: #000; margin-left: 10px; font-size: 12px">{{ $comment->created_at }}
+                                                                </small>
+                                                            </div>
+                                                            <hr>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @endforeach
                                             </li> <!-- End - Review Comment list-->
                                         </ul> <!-- End - Review Comment -->
                                         <div class="review-form">
                                             <div class="review-form-text-top">
-                                                <h5>ADD A REVIEW</h5>
-                                                <p>Your email address will not be published. Required fields are marked *
+                                                <h5>Add Comment</h5>
+                                                {{-- <p>Your email address will not be published. Required fields are marked * --}}
                                                 </p>
                                             </div>
 
-                                            <form action="#" method="post">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="default-form-box">
-                                                            <label for="comment-name">Your name <span>*</span></label>
-                                                            <input id="comment-name" type="text"
-                                                                placeholder="Enter your name" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="default-form-box">
-                                                            <label for="comment-email">Your Email <span>*</span></label>
-                                                            <input id="comment-email" type="email"
-                                                                placeholder="Enter your email" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <div class="default-form-box">
-                                                            <label for="comment-review-text">Your review
-                                                                <span>*</span></label>
-                                                            <textarea id="comment-review-text" placeholder="Write a review" required></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <button class="btn btn-md btn-black-default-hover"
-                                                            type="submit">Submit</button>
+                                            <form action="{{ route('commentStore', $product->id) }}" method="post">
+                                                @csrf
+                                                <div class="col-12">
+                                                    <div class="default-form-box">
+                                                        <label for="comment-review-text">Comment Content
+                                                            <span>*</span></label>
+                                                        <textarea id="comment-review-text" name="content" placeholder="Write a review"></textarea>
                                                     </div>
                                                 </div>
-                                            </form>
+                                                <div>
+                                                    @if ($errors->any())
+                                                        <ul class="list-unstyled">
+                                                            @foreach ($errors->all() as $error)
+                                                                <li style="color: red; float: right">{{ $error }}
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                    @if (session()->has('success'))
+                                                        <div style="color: green; float: right">
+                                                            {{ session()->get('success') }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <div class="col-12">
+                                                    <button class="btn btn-md btn-black-default-hover"
+                                                        type="submit">Submit</button>
+                                                </div>
                                         </div>
+                                        </form>
                                     </div>
-                                </div> <!-- End Product Details Tab Content Singel -->
-                            </div>
-                        </div> <!-- End Product Details Tab Content -->
+                                </div>
+                            </div> <!-- End Product Details Tab Content Singel -->
+                        </div>
+                    </div> <!-- End Product Details Tab Content -->
 
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
     </div> <!-- End Product Content Tab Section -->
 
     <!-- Start Product Default Slider Section -->

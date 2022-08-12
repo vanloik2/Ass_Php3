@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InterfaceClientController;
 use App\Http\Controllers\OrderController;
@@ -70,6 +71,8 @@ Route::middleware('auth')->prefix('/')->group(function () {
 
         Route::get('statis', [StatisController::class, 'index'])->name('statis.index');
 
+        Route::resource('comment', CommentController::class);
+
     });
 
     Route::prefix('client')->group(function () {
@@ -84,6 +87,8 @@ Route::middleware('auth')->prefix('/')->group(function () {
         Route::get('order', [InterfaceClientController::class, 'order'])->name('order');
         Route::delete('orderDetroy/{id}', [InterfaceClientController::class, 'orderDetroy'])->name('orderDetroy');
         Route::post('contact', [InterfaceClientController::class, 'contactStore'])->name('contactStore');
+        Route::post('comment/{id}', [InterfaceClientController::class, 'commentStore'])->name('commentStore');
+        Route::get('comment-destroy/{id}', [InterfaceClientController::class, 'commentDestroy'])->name('commentDestroy');
         Route::get('checkout', [InterfaceClientController::class, 'checkout'])->name('checkout');
     });
 });

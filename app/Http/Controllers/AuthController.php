@@ -72,7 +72,7 @@ class AuthController extends Controller
 
         $googleUser = Socialite::driver('google')->user();
         $user = User::where('email', $googleUser->email)->first();
-
+        
         if ($user) {
 
             Auth::login($user);

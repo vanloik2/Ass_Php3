@@ -66,7 +66,14 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('statis.index') }}">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Statis</span>
+            <span>Statistical</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('comment.index') }}">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Comments</span>
         </a>
     </li>
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
+use App\Http\Requests\ContactRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Contact;
 use App\Models\Order;
 use App\Models\Product;
@@ -39,6 +42,8 @@ class InterfaceClientController extends Controller
     {
 
         $data['product'] = Product::find($id);
+        $data['comments'] = Comment::with('user')->where('product_id', $id)->paginate(6);
+
         return view('client.product-detail', $data);
     }
 
@@ -60,7 +65,6 @@ class InterfaceClientController extends Controller
         foreach ($data['carts'] as $cart) {
 
             $total += $cart['price'] * $cart['quant'];
-
         }
         $data['total'] = number_format($total, 0, ',', '.');
 
@@ -69,7 +73,11 @@ class InterfaceClientController extends Controller
 
     public function addToCart(Product $product, Request $request)
     {
-        $product->quant = $request->quant;
+        if (isset($request->quant)) {
+            $product->quant = $request->quant;
+        } else {
+            $product->quant = 1;
+        }
 
         if (Session::get('carts') == null) {
             $carts = [];
@@ -98,45 +106,62 @@ class InterfaceClientController extends Controller
         return redirect()->back()->with('success', 'Xóa sản phẩm khỏi giỏ hàng thành công');
     }
 
-    public function order(){
+    public function order()
+    {
 
         $data['orders'] = Order::select('id', 'code', 'username', 'user_id', 'product_name', 'price', 'quantity', 'total', 'created_at')
-        ->where('user_id', Auth::user()->id)
-        ->paginate(4);
+            ->where('user_id', Auth::user()->id)
+            ->paginate(4);
 
         return view('client.order', $data);
-
     }
 
-    public function orderDetroy($id){
+    public function orderDetroy($id)
+    {
 
         $order = Order::find($id);
 
         $order->delete();
 
         return redirect()->route('order')->with('success', 'Xóa đơn hàng thành công');
-
     }
 
-    public function contactStore(Request $request){
-
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'message' => 'required',
-        ]);
+    public function contactStore(ContactRequest $request)
+    {
 
         $contact = new Contact($request->all());
 
         $contact->save();
 
-        return redirect()->back()->with('success', 'Gửi thành công');
+        return redirect()->back()->with('success', 'Gửi thành công!');
+    }
 
+    public function commentStore(CommentRequest $request, $id){
+
+        $comment = new Comment($request->all());
+        $comment->product_id = $id;
+        $comment->user_id = Auth::user()->id;
+        $comment->name = Auth::user()->name;
+        $comment->email = Auth::user()->email;
+
+        $comment->save();
+
+        return redirect()->back()->with('success', 'Gửi thành công!');
+
+    }
+
+    public function commentDestroy($id){
+
+        $comment = Comment::find($id);
+        $comment->delete();
+        return redirect()->back()->with('success', 'Xóa thành công!');
+        
     }
 
     //checkout
 
-    public function checkout(){
+    public function checkout()
+    {
 
         $order = new Order();
 
@@ -154,7 +179,6 @@ class InterfaceClientController extends Controller
         foreach (Session::get('carts') as $cart) {
 
             $total += $cart['price'] * $cart['quant'];
-
         }
         $order->total = number_format($total, 0, ',', '.');
 
@@ -162,6 +186,5 @@ class InterfaceClientController extends Controller
         Session::forget('carts');
 
         return back()->with('success', 'Đặt hàng thành công');
-
     }
 }

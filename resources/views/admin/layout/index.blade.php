@@ -314,6 +314,9 @@
     <!-- Page level plugins -->
     <script src="{{ asset('admin/js/input-file.js') }}"></script>
     <!-- Page level custom scripts -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <script src="js/chart-bar-demo.js"></script>
 </body>
 
 </html>
