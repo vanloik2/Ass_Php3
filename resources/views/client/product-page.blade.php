@@ -79,13 +79,6 @@
                             </div>
                         </div>
                     </div> <!-- End Section Content -->
-                    <div style="margin-left: 50px; margin-right: 50px">
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-                    </div>
                     <!-- Start Tab Wrapper -->
                     <div class="sort-product-tab-wrapper">
                         <div class="container">

@@ -243,13 +243,6 @@
                 </div>
             </div>
         </div>
-        <div style="margin-left: 50px; margin-right: 50px">
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-        </div>
         <!-- Start Section Content Text Area -->
         <div class="product-wrapper" data-aos="fade-up" data-aos-delay="200">
             <div class="container">

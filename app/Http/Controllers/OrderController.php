@@ -16,7 +16,7 @@ class OrderController extends Controller
     {
         $data['title'] = 'Bảng đơn hàng';
 
-        $data['orders'] = Order::select('id', 'code', 'username', 'user_id', 'product_name', 'price', 'quantity', 'total', 'created_at')->paginate(4);
+        $data['orders'] = Order::select('id', 'code', 'name', 'user_id', 'product_name', 'price', 'address', 'quantity', 'total', 'status', 'created_at')->paginate(4);
 
         return view('admin.table.order.index', $data);
     }
@@ -84,10 +84,18 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        $order = Order::find($id);
+      
+    }
 
-        $order->delete();
+    public function changeStatus(Order $order){
 
-        return back()->with('success', 'Xóa đơn hàng thành công');
+        if($order->status == 0){
+            $order->status = 2;
+        }
+
+        $order->save();
+
+        return back()->with('success', 'Xác nhận đơn hàng thành công!');
+
     }
 }

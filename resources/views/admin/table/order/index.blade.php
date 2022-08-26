@@ -1,12 +1,14 @@
 @extends('admin.layout.index')
 @section('content')
-<div>
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{session('success')}}
-        </div>
-    @endif
-</div>
+<style>
+</style>
+    <div>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
     <div class="card">
         <div class="card-header">
             <form action="" method="get">
@@ -24,7 +26,7 @@
             </form>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-stripped table-bordered text-center">
+            <table class="table table-stripped table-bordered text-center">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -34,7 +36,8 @@
                         <th>Gía sản phẩm</th>
                         <th>Số lượng sản phẩm</th>
                         <th>Tổng tiền</th>
-                        <th>Xử lí</th>
+                        <th>Địa chỉ</th>
+                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,18 +45,29 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $order->code }}</td>
-                            <td>{{ $order->username }}</td>
+                            <td>{{ $order->name }}</td>
                             <td>{{ $order->product_name }}</td>
                             <td>{{ $order->price }}</td>
                             <td>{{ $order->quantity }}</td>
                             <td>{{ $order->total }}</td>
+                            <td>{{ $order->address }}</td>
                             <td>
                                 {{-- <a href="{{ route('order.edit', $order->id) }}" class="btn btn-sm btn-warning"><i class="bi bi-gear"></i></a> --}}
-                                <form action="{{ route('order.destroy', $order->id) }}" method="post"
-                                    style="display: inline-block" onsubmit="return confirm('Xác nhận xóa!!!')">
-                                    @method('DELETE')
+                                <form action="{{ route('change-status-order', $order) }}" method="post" style="display: inline-block"
+                                    onsubmit="return confirm('Xác nhận hoàn thành đơn hàng!!!')">
+                                    @method('PUT')
                                     @csrf
-                                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button>
+                                    @if ($order->status == 0)
+                                        <button class="change-status"
+                                            style="border: none; background-color: #ffffff; color: blue">Chưa xử lí</button>
+                                    @elseif($order->status == 2)
+                                        <p class="change-status"
+                                            style="border: none; background-color: #ffffff; color: green">Đã hoàn
+                                            thành</p>
+                                    @elseif($order->status == 1)
+                                        <p class="change-status"
+                                            style="border: none; background-color: #ffffff; color: red">Đã hủy</p>
+                                    @endif
                                 </form>
                             </td>
                         </tr>

@@ -24,13 +24,6 @@
 
     <!-- ...::::Start About Us Center Section:::... -->
     <div class="empty-cart-section section-fluid">
-        <div>
-            @if(session('success'))
-                <div class="alert alert-success text-center">
-                    {{session('success')}}
-                </div>
-            @endif
-        </div>
         <div class="emptycart-wrapper">
             <div class="container">
                 <div class="row">

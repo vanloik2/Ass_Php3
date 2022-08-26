@@ -52,7 +52,7 @@
                             <td>{{ $user->address }}</td>
                             <td>{{ $user->role == 1 ? 'Nhân viên' : 'khách hàng' }}</td>
                             <td>
-                                <form action="{{ route('user.change-status', $user) }}" method="post"
+                                <form action="{{ route('change-status-user', $user) }}" method="post"
                                     onsubmit=" return confirm('Đổi trạng thái người dùng!')">
                                     @method('PUT')
                                     @csrf
@@ -76,7 +76,9 @@
                                     style="display: inline-block" onsubmit="return confirm('Submit Delete!!!')">
                                     @method('DELETE')
                                     @csrf
-                                    <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button>
+                                    @if(Auth::user()->id != $user->id)
+                                        <button class="btn btn-sm btn-danger"><i class="bi bi-trash3"></i></button>
+                                    @endif
                                 </form>
                             </td>
                         </tr>

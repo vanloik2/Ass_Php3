@@ -60,12 +60,13 @@ Route::middleware('auth')->prefix('/')->group(function () {
         Route::resource('category', CategoryController::class);
 
         Route::resource('product', ProductController::class);
-        Route::put('change-status/{product}', [ProductController::class, 'changeStatus'])->name('product.change-status');
+        Route::put('change-status-product/{product}', [ProductController::class, 'changeStatus'])->name('change-status-product');
 
         Route::resource('user', UserController::class);
-        Route::put('change-status/{user}', [UserController::class, 'changeStatus'])->name('user.change-status');
+        Route::put('change-status-user/{user}', [UserController::class, 'changeStatus'])->name('change-status-user');
 
         Route::resource('order', OrderController::class);
+        Route::put('change-status-order/{order}', [OrderController::class, 'changeStatus'])->name('change-status-order');
 
         Route::resource('contact', ContactController::class);
 
@@ -74,23 +75,24 @@ Route::middleware('auth')->prefix('/')->group(function () {
         Route::resource('comment', CommentController::class);
 
     });
+});
 
-    Route::prefix('client')->group(function () {
+Route::prefix('client')->group(function () {
 
-        Route::get('home-page', [InterfaceClientController::class, 'homePage'])->name('home_page');
-        Route::get('products', [InterfaceClientController::class, 'showProducts'])->name('products');
-        Route::get('contact-us', [InterfaceClientController::class, 'contactUs'])->name('contact-us');
-        Route::get('carts', [InterfaceClientController::class, 'carts'])->name('carts');
-        Route::get('product-detail/{id}', [InterfaceClientController::class, 'productDetail'])->name('product-detail');
-        Route::post('add-to-cart/{product}', [InterfaceClientController::class, 'addToCart'])->name('addToCart');
-        Route::get('remove-item-cart/{id}', [InterfaceClientController::class, 'removeItemCart'])->name('removeItemCart');
-        Route::get('order', [InterfaceClientController::class, 'order'])->name('order');
-        Route::delete('orderDetroy/{id}', [InterfaceClientController::class, 'orderDetroy'])->name('orderDetroy');
-        Route::post('contact', [InterfaceClientController::class, 'contactStore'])->name('contactStore');
-        Route::post('comment/{id}', [InterfaceClientController::class, 'commentStore'])->name('commentStore');
-        Route::get('comment-destroy/{id}', [InterfaceClientController::class, 'commentDestroy'])->name('commentDestroy');
-        Route::get('checkout', [InterfaceClientController::class, 'checkout'])->name('checkout');
-    });
+    Route::get('home-page', [InterfaceClientController::class, 'homePage'])->name('home_page');
+    Route::get('products', [InterfaceClientController::class, 'showProducts'])->name('products');
+    Route::get('contact-us', [InterfaceClientController::class, 'contactUs'])->name('contact-us');
+    Route::get('carts', [InterfaceClientController::class, 'carts'])->name('carts');
+    Route::get('product-detail/{id}', [InterfaceClientController::class, 'productDetail'])->name('product-detail');
+    Route::post('add-to-cart/{product}', [InterfaceClientController::class, 'addToCart'])->name('addToCart');
+    Route::get('remove-item-cart/{id}', [InterfaceClientController::class, 'removeItemCart'])->name('removeItemCart');
+    Route::get('order', [InterfaceClientController::class, 'order'])->name('order');
+    Route::put('orderDetroy/{order}', [InterfaceClientController::class, 'orderDetroy'])->name('orderDetroy');
+    Route::post('contact', [InterfaceClientController::class, 'contactStore'])->name('contactStore');
+    Route::post('comment/{id}', [InterfaceClientController::class, 'commentStore'])->name('commentStore');
+    Route::get('comment-destroy/{id}', [InterfaceClientController::class, 'commentDestroy'])->name('commentDestroy');
+    Route::get('checkout', [InterfaceClientController::class, 'checkout'])->name('checkout');
+    Route::post('checkoutAction', [InterfaceClientController::class, 'checkoutAction'])->name('checkoutAction');
 });
 
 

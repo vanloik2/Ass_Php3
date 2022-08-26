@@ -58,7 +58,7 @@
                                                 <td class="product-price">{{ number_format($cart->price, 0, ',', '.') }}
                                                 </td>
                                                 <td class="product_quantity"><label>{{ $cart->quant }}</label> <input
-                                                        min="1" max="100" value="1" type="number"></td>
+                                                        min="1" max="100" value="{{ $cart->quant }}" type="number"></td>
                                                 <td class="product_total">
                                                     {{ number_format($cart->price * $cart->quant, 0, ',', '.') }}</td>
                                             </tr>

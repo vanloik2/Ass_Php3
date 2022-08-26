@@ -243,11 +243,12 @@
                 </nav>
                 <!-- End of Topbar -->
                 <div class="container-fluid">
+                    
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800"></h1>
                     <p class="mb-4"></p>
-
+                    
                     <!-- DataTales Example -->
                     <h2> {{ $title }} </h2>
 
@@ -314,9 +315,7 @@
     <!-- Page level plugins -->
     <script src="{{ asset('admin/js/input-file.js') }}"></script>
     <!-- Page level custom scripts -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <script src="js/chart-bar-demo.js"></script>
+    
 </body>
 
 </html>

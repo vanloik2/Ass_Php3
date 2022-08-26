@@ -22,13 +22,6 @@
     </div> <!-- ...:::: End Breadcrumb Section:::... -->
 
     <div class="card container">
-        <div>
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{session('success')}}
-                </div>
-            @endif
-        </div>
         <div class="card-body">
             <table class="table table-hover table-stripped table-bordered text-center">
                 <thead>
@@ -37,9 +30,10 @@
                         <th>Mã đơn hàng</th>
                         <th>Tên người dùng</th>
                         <th>Tên sản phẩm</th>
-                        <th>Gía sản phẩm</th>
+                        <th>Giá sản phẩm</th>
                         <th>Số lượng sản phẩm</th>
                         <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
                         <th>Xử lí</th>
                     </tr>
                 </thead>
@@ -48,17 +42,22 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $order->code }}</td>
-                            <td>{{ $order->username }}</td>
+                            <td>{{ $order->name }}</td>
                             <td>{{ $order->product_name }}</td>
                             <td>{{ $order->price }}</td>
                             <td>{{ $order->quantity }}</td>
                             <td>{{ $order->total }}</td>
                             <td>
+                                @if ($order->status == 1)
+                                    <p>Đã hủy đơn</p>
+                                @endif
+                            </td>
+                            <td>
                                 {{-- <a href="{{ route('order.edit', $order->id) }}" class="btn btn-sm btn-warning"><i
                                         class="bi bi-gear"></i></a> --}}
                                 <form action="{{ route('orderDetroy', $order->id) }}" method="post"
-                                    style="display: inline-block" onsubmit="return confirm('Xác nhận xóa!!!')">
-                                    @method('DELETE')
+                                    style="display: inline-block" onsubmit="return confirm('Xác nhận hủy đơn hàng!!!')">
+                                    @method('PUT')
                                     @csrf
                                     <button class="btn btn-sm btn-warning"><i class="bi bi-trash3"></i></button>
                                 </form>

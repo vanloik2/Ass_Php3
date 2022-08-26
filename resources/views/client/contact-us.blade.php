@@ -94,22 +94,6 @@
                 <div class="col-lg-8">
                     <div class="contact-form section-top-gap-100" data-aos="fade-up" data-aos-delay="200">
                         <h3>Get In Touch</h3>
-                        <div>
-                            @if($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach($errors->all() as $error)
-                                            <li>{{$error}}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                            @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{session('success')}}
-                                </div>
-                            @endif
-                        </div>
                         <form action="{{ route('contactStore') }}" method="post">
                             @csrf
                             <div class="row">
@@ -117,12 +101,18 @@
                                     <div class="default-form-box mb-20">
                                         <label for="contact-name">Name</label>
                                         <input name="name" type="text" id="contact-name">
+                                        @if($errors->has('name'))
+                                             <p class="text-danger">{{$errors->first('name')}}</p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="default-form-box mb-20">
                                         <label for="contact-email">Email</label>
                                         <input name="email" type="email" id="contact-email">
+                                        @if($errors->has('email'))
+                                            <p class="text-danger">{{$errors->first('email')}}</p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -135,6 +125,9 @@
                                     <div class="default-form-box mb-20">
                                         <label for="contact-message">Your Message</label>
                                         <textarea name="message" id="contact-message" cols="30" rows="10"></textarea>
+                                        @if($errors->has('message'))
+                                            <p class="text-danger">{{$errors->first('message')}}</p>
+                                        @endif  
                                     </div>
                                 </div>
                                 <div class="col-lg-12">

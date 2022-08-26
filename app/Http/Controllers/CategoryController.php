@@ -128,9 +128,9 @@ class CategoryController extends Controller
 
         $products = Product::where('category_id', $id)->get();
 
-        foreach ($products as $product) {
-            $product->delete();
-        }
+        $productId = $products->pluck('id');
+
+        Product::whereIn('id', $productId)->update(['category_id' => 0]);
 
         $category->delete();
 

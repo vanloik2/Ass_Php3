@@ -58,9 +58,9 @@
                             <td>
                                 <img src="{{ asset($product->image) }}" width="60px" alt="">
                             </td>
-                            <td>{{ $product->category->name }}</td>
+                            <td>{{ isset($product->category->name) ? $product->category->name : '' }}</td>
                             <td>
-                                <form action="{{ route('product.change-status', $product) }}" method="post"
+                                <form action="{{ route('change-status-product', $product) }}" method="post"
                                     onsubmit=" return confirm('Đổi trạng thái sản phẩm!')">
                                     @method('PUT')
                                     @csrf
