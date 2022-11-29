@@ -22,9 +22,10 @@ class ProductController extends Controller
         $data['category_id'] = $request->get('category_id');
         $data['txt_search'] = $request->get('txt_search');
 
-        $data['products'] = Product::with('category')->where('name', 'like', '%' . $data['txt_search'] . '%')
-        ->where('category_id', 'like', '%' . $data['category_id'] . '%')
-        ->paginate(4)->withQueryString();
+        $data['products'] = Product::with('category')
+            ->where('name', 'like', '%' . $data['txt_search'] . '%')
+            ->where('category_id', 'like', '%' . $data['category_id'] . '%')
+            ->paginate(4)->withQueryString();
 
         return view('admin.table.product.index', $data);
     }
@@ -105,7 +106,7 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         $product->fill($request->all());
-      
+
         if ($request->hasFile('image')) {
 
             $image = $request->image;
@@ -145,7 +146,7 @@ class ProductController extends Controller
         }
 
         $product->save();
-        
+
         return back()->with('success', 'Cập nhật trạng thái thành công');
     }
 }

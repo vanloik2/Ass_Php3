@@ -42,12 +42,11 @@ class InterfaceClientController extends Controller
 
     public function productDetail($id)
     {
-
         $data['product'] = Product::find($id);
         $data['productCate'] = Product::where('category_id', $data['product']->category_id)
-        ->where('status', 1)
-        ->where('id', '<>', $id)
-        ->get();
+            ->where('status', 1)
+            ->where('id', '<>', $id)
+            ->get();
         $data['comments'] = Comment::with('user')->where('product_id', $id)->paginate(6);
 
         return view('client.product-detail', $data);
@@ -114,7 +113,7 @@ class InterfaceClientController extends Controller
 
     public function order()
     {
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return redirect()->back()->with('error', 'Bạn cần đăng nhập để đặt hàng');
         }
 
@@ -128,7 +127,7 @@ class InterfaceClientController extends Controller
     public function orderDetroy(Order $order)
     {
 
-        if($order->status == 0){
+        if ($order->status == 0) {
             $order->status = 1;
         }
 
@@ -139,7 +138,7 @@ class InterfaceClientController extends Controller
 
     public function contactStore(ContactRequest $request)
     {
-        if(Auth::check() == false){
+        if (Auth::check() == false) {
             return redirect()->back()->with('error', 'Bạn phải đăng nhập để được gửi thông tin!');
         }
 
@@ -150,9 +149,10 @@ class InterfaceClientController extends Controller
         return redirect()->back()->with('success', 'Gửi contact thành công!');
     }
 
-    public function commentStore(CommentRequest $request, $id){
+    public function commentStore(CommentRequest $request, $id)
+    {
 
-        if(Auth::check() == false){
+        if (Auth::check() == false) {
             return redirect()->back()->with('error', 'Bạn cần đăng nhập để bình luận!');
         }
 
@@ -165,24 +165,23 @@ class InterfaceClientController extends Controller
         $comment->save();
 
         return redirect()->back()->with('success', 'Gửi bình luận thành công!');
-
     }
 
-    public function commentDestroy($id){
+    public function commentDestroy($id)
+    {
 
         $comment = Comment::find($id);
         $comment->delete();
         return redirect()->back()->with('success', 'Xóa comment thành công!');
-        
     }
 
     //checkout
 
     public function checkout()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $data['user'] = User::find(Auth::user()->id);
-        }else{
+        } else {
             $data['user'] = null;
         }
 
@@ -196,12 +195,12 @@ class InterfaceClientController extends Controller
         }
         $data['total'] = number_format($total, 0, ',', '.');
         return view('client.checkout', $data);
-        
     }
 
-    public function checkoutAction(CheckoutRequest $request){
+    public function checkoutAction(CheckoutRequest $request)
+    {
 
-        if(Auth::check() == false){
+        if (Auth::check() == false) {
             return back()->with('error', 'Bạn cần đăng nhập để thanh toán!');
         }
 

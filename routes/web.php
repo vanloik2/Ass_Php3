@@ -73,7 +73,6 @@ Route::middleware('auth')->prefix('/')->group(function () {
         Route::get('statis', [StatisController::class, 'index'])->name('statis.index');
 
         Route::resource('comment', CommentController::class);
-
     });
 });
 
@@ -102,5 +101,3 @@ Route::prefix('client')->group(function () {
 
 //     return Socialite::driver('google')->redirect();
 // });
-
-

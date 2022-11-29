@@ -47,7 +47,7 @@ class CategoryController extends Controller
 
         $category = new Category($request->all());
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
 
             $image = $request->image;
             $imageName = $image->hashName();
@@ -59,7 +59,6 @@ class CategoryController extends Controller
         $category->save();
 
         return redirect()->route('category.index')->with('success', 'Thêm mới danh mục sản phẩm thành công');
-
     }
 
     /**
@@ -86,7 +85,6 @@ class CategoryController extends Controller
         $data['category'] = Category::find($id);
 
         return view('admin.table.category.edit', $data);
-
     }
 
     /**
@@ -102,7 +100,7 @@ class CategoryController extends Controller
 
         $category->fill($request->all());
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
 
             $image = $request->image;
             $imageName = $image->hashName();
@@ -112,7 +110,7 @@ class CategoryController extends Controller
         }
 
         $category->save();
-        
+
         return redirect()->route('category.index')->with('success', 'Sửa danh mục sản phẩm thành công');
     }
 

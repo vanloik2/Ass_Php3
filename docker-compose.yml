@@ -1,0 +1,41 @@
+version: '3.4'
+services:
+  mysql:
+    image: mysql:8
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+
+  web:
+    tty: true
+    stdin_open: true
+    command: bash #sh /docker-entrypoint.sh
+    build: ./docker
+    links:
+      - mysql
+    ports:
+      - 8080:8000
+    environment:
+      APP_DEBUG: 'true'
+      XDEBUG_MODE: coverage
+      PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/app/vendor/bin
+    volumes:
+      - .:/app:cached
+      - ./docker-dev/web/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./docker/supervisor/:/etc/supervisor.d/
+      # - composer_caches:/app/vendor
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8081:80
+    links:
+      - mysql
+    environment:
+      - PMA_ARBITRARY=1
+
+volumes:
+  composer_caches:
+  mysql-data:

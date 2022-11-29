@@ -21,11 +21,9 @@ class AuthController extends Controller
 
     public function registerPost(RegisterRequest $request)
     {
-
         $user = new User($request->all());
-
+        // dd($user);
         $user->password = Hash::make($request->password);
-
         $user->save();
 
         return redirect()->route('login')->with('success', 'Đăng ký thành công');
@@ -39,7 +37,6 @@ class AuthController extends Controller
 
     public function loginPost(LoginRequest $request)
     {
-
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
             $request->session()->regenerate();
@@ -52,7 +49,6 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-
         Auth::logout();
 
         $request->session()->invalidate();
@@ -72,7 +68,7 @@ class AuthController extends Controller
 
         $googleUser = Socialite::driver('google')->user();
         $user = User::where('email', $googleUser->email)->first();
-        
+
         if ($user) {
 
             Auth::login($user);

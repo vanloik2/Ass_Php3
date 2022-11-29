@@ -1,6 +1,9 @@
 {
     "name": "laravel/laravel",
     "type": "project",
+    "phpcs": "./vendor/bin/phpcs",
+    "phpcbf": "./vendor/bin/phpbcf",
+    "phpunit": "./vendor/bin/phpunit",
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
@@ -18,8 +21,10 @@
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "phpunit/php-code-coverage": "^9.2",
         "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^1.0",
+        "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
         "psr-4": {

@@ -28,6 +28,8 @@ class User extends Authenticatable
         'status',
     ];
 
+    // protected $guarded = [];
+
     /**
      * The attributes that should be hidden for serialization.
      *

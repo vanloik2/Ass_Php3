@@ -37,5 +37,4 @@ class LoginRequest extends FormRequest
             'password.required' => 'Mật khẩu không được để trống',
         ];
     }
-    
 }
